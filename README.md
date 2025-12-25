@@ -1,8 +1,3 @@
-Here is a **professional, clean, industry-style README.md** you can use for your repository.
-You can **copy–paste this directly** into `README.md` in your project.
-
----
-
 # Blogy
 
 **Blogy** is a modern frontend blogging application designed with scalability, clarity, and maintainability in mind. The project focuses on providing a clean user interface and a structured codebase suitable for building and extending a blogging platform.
