@@ -1,5 +1,5 @@
 # Blogy
-[🔗 live Demo](https://github.com/Prashant-treat)
+[🔗 live Demo](https://blogy-phi-sand.vercel.app/)
 
 **Blogy** is a modern frontend blogging application designed with scalability, clarity, and maintainability in mind. The project focuses on providing a clean user interface and a structured codebase suitable for building and extending a blogging platform.
 
