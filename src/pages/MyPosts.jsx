@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, PostCard } from "../components";
+import { Container, Loader, PostCard } from "../components";
 import appwriteService from "../service/config";
 import { useSelector } from "react-redux";
 import { Query } from "appwrite";
@@ -24,7 +24,7 @@ const userData = useSelector((state) => state.auth.userData);
         {posts.length === 0 ? (
           <h1 className="text-2xl font-bold text-center
                          text-gray-700 dark:text-gray-300">
-            No Posts Available
+            <Loader/>
           </h1>
         ) : (
           <div

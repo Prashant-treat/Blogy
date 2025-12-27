@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import appwriteService from "../service/config";
-import { Container, PostCard } from "../components";
+import { Container, PostCard,Loader } from "../components";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -18,7 +18,7 @@ function Home() {
       <div className="w-full py-16 text-center">
         <Container>
           <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-300">
-            No Posts Here
+            <Loader/>
           </h1>
         </Container>
       </div>

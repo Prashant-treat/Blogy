@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../service/config";
-import { Button, Container } from "../components";
+import { Button, Container,PostLoader } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -45,9 +46,14 @@ export default function Post() {
                     {isAuthor && (
                         <div className="absolute  right-6 top-6 flex gap-3 sh transition-opacity duration-300 group">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-700 opacity-0   hover:bg-green-500 group-hover:opacity-100  group-hover:shadow-xl ">edit</Button>
+                                <Button bgColor="bg-green-700 opacity-0   hover:bg-green-500 group-hover:opacity-100  group-hover:shadow-xl ">
+                                    edit
+                                </Button>
                             </Link>
-                            <Button bgColor="bg-red-700 opacity-0  hover:bg-red-500 group-hover:opacity-100   group-hover:shadow-xl" onClick={deletePost}>
+                            <Button
+                                bgColor="bg-red-700 opacity-0  hover:bg-red-500 group-hover:opacity-100   group-hover:shadow-xl"
+                                onClick={deletePost}
+                            >
                                 Delete
                             </Button>
                         </div>
@@ -61,5 +67,9 @@ export default function Post() {
                 <div className="browser-css">{parse(post.content)}</div>
             </Container>
         </div>
-    ) : null;
+    ) : (
+        <Container>
+            <PostLoader />
+        </Container>
+    );
 }

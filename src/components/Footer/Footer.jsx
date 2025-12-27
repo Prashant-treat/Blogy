@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa'
+import { FaGithub,FaEnvelope , FaLinkedin } from 'react-icons/fa'
 import Logo from '../Logo'
 
 function Footer() {
@@ -14,7 +14,7 @@ function Footer() {
           <div className="lg:col-span-2">
             <Logo width="110px" />
             <p className="mt-4 max-w-sm text-sm text-gray-600 dark:text-gray-400">
-              Building modern UI components for fast and scalable web apps.
+              Blogy is a platform built to write, share, and inspire ideas.
             </p>
 
             {/* Social Icons */}
@@ -31,7 +31,7 @@ function Footer() {
                 className="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
                 aria-label="Twitter"
               >
-                <FaTwitter size={20} />
+                <FaEnvelope  size={20} />
               </a>
               <a
                 href="#"
@@ -47,7 +47,7 @@ function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 border-t border-gray-200 dark:border-gray-800 pt-6 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} DevUI. All rights reserved.
+            © {new Date().getFullYear()} Blogy. All rights reserved.
           </p>
         </div>
       </div>

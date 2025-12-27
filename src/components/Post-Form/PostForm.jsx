@@ -21,12 +21,12 @@ export default function PostForm({ post }) {
 
     const submit = async (data) => {
         if (post) {
-
-            const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
+            const file = data.image[0]
+                ? await appwriteService.uploadFile(data.image[0])
+                : null;
             // const file = data.image?.[0]
             //     ? await appwriteService.uploadFile(data.image[0])
             //     : null; //optional
-
 
             if (file) {
                 appwriteService.deleteFile(post.featuredImage);
@@ -46,7 +46,6 @@ export default function PostForm({ post }) {
             // const file = data.image?.[0]
             //     ? await appwriteService.uploadFile(data.image[0])
             //     : null;
-
 
             if (file) {
                 const fileId = file.$id;
@@ -87,14 +86,19 @@ export default function PostForm({ post }) {
     }, [watch, slugTransform, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+        <form
+            onSubmit={handleSubmit(submit)}
+            className="flex flex-col md:flex-row gap-4"
+        >
+            {/* Left Section */}
+            <div className="w-full md:w-2/3 px-1 md:px-2">
                 <Input
                     label="Title :"
                     placeholder="Title"
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
+
                 <Input
                     label="Slug :"
                     placeholder="Slug"
@@ -106,6 +110,7 @@ export default function PostForm({ post }) {
                         });
                     }}
                 />
+
                 <RTE
                     label="Content :"
                     name="content"
@@ -113,15 +118,17 @@ export default function PostForm({ post }) {
                     defaultValue={getValues("content")}
                 />
             </div>
-            <div className="w-1/3 px-2">
+
+            {/* Right Section */}
+            <div className="w-full md:w-1/3 px-1 md:px-2">
                 <Input
                     label="Featured Image :"
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
-                    // {...register("image")} //optional
                 />
+
                 {post && (
                     <div className="w-full mb-4">
                         <img
@@ -129,20 +136,22 @@ export default function PostForm({ post }) {
                                 post.featuredImage
                             )}
                             alt={post.title}
-                            className="rounded-lg"
+                            className="rounded-lg w-full object-cover"
                         />
                     </div>
                 )}
+
                 <Select
                     options={["active", "inactive"]}
                     label="Status"
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
+
                 <Button
                     type="submit"
                     bgColor={post ? "bg-green-500" : undefined}
-                    className="w-full"
+                    className="w-full py-3"
                 >
                     {post ? "Update" : "Submit"}
                 </Button>

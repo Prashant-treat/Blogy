@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Container, Logo, LogoutBtn } from "../index.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleDarkMode } from "../../store/themeSlice.js";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status);
@@ -26,8 +27,38 @@ function Header() {
         setMobileOpen(false);
     };
 
+    const dropdownRef = useRef(null); // for click
+    const menuButtonRef = useRef(null); //for handleing click
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target) &&
+                menuButtonRef.current &&
+                !menuButtonRef.current.contains(event.target)
+            ) {
+                setMobileOpen(false);
+            }
+        };
+
+        if (mobileOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [mobileOpen]);
+
     return (
-        <header className="sticky top-0 z-50 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-md">
+        <header
+            className="sticky top-0 z-50
+             bg-white/90 dark:bg-gray-950/90
+             backdrop-blur-sm
+             border-b border-gray-200/60 dark:border-gray-800/60
+             shadow-sm"
+        >
             <Container>
                 <nav className="flex items-center justify-between py-3">
                     {/* Logo */}
@@ -36,7 +67,7 @@ function Header() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <ul className="hidden md:flex items-center gap-2">
+                    <ul className="hidden md:flex items-center gap-1">
                         {navItems.map(
                             (item) =>
                                 item.active && (
@@ -44,8 +75,9 @@ function Header() {
                                         <button
                                             onClick={() => navigate(item.slug)}
                                             className="px-4 py-2 rounded-full text-sm font-medium
-                      text-gray-700 dark:text-gray-200
-                      hover:bg-blue-100 dark:hover:bg-gray-700 transition"
+                             text-gray-800 dark:text-gray-200
+                             hover:bg-blue-100/60 dark:hover:bg-gray-700/50
+                             transition-colors"
                                         >
                                             {item.name}
                                         </button>
@@ -56,34 +88,39 @@ function Header() {
                         {authStatus && (
                             <LogoutBtn
                                 className="px-4 py-2 rounded-full text-sm font-medium
-                      text-gray-700 dark:text-gray-200
-                      hover:bg-blue-100 dark:hover:bg-gray-700 transition"
+                       text-gray-800 dark:text-gray-200
+                       hover:bg-blue-100/60 dark:hover:bg-gray-700/50
+                       transition-colors"
                             />
                         )}
 
-                        {/* Theme Toggle */}
+                        {/* Theme Toggle (Desktop) */}
                         <button
                             onClick={() => dispatch(toggleDarkMode())}
-                            className="ml-2 px-4 py-2 rounded-full text-sm
-              bg-gray-200 dark:bg-gray-700
-              text-gray-800 dark:text-gray-100"
+                            className="ml-2 w-9 h-9 rounded-full
+                     flex items-center justify-center
+                     bg-white/90 dark:bg-gray-950/95
+                     text-gray-800 dark:text-white
+                     hover:scale-110 transition-all duration-200
+                     "
                         >
-                            {theme === "light" ? "🌙 " : "☀️"}
+                            {theme === "light" ? (
+                                <FiMoon size={18} />
+                            ) : (
+                                <FiSun size={18} />
+                            )}
                         </button>
                     </ul>
 
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-2">
                         <button
-                            onClick={() => dispatch(toggleDarkMode())}
-                            className="px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-700"
-                        >
-                            {theme === "light" ? "🌙" : "☀️"}
-                        </button>
-
-                        <button
                             onClick={() => setMobileOpen(!mobileOpen)}
-                            className="px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-700"
+                            ref={menuButtonRef}
+                            className="px-3 py-2 rounded-md
+                     bg-gray-200/70 dark:bg-gray-800/70
+                     backdrop-blur-sm
+                     transition-colors"
                         >
                             ☰
                         </button>
@@ -92,35 +129,70 @@ function Header() {
 
                 {/* Mobile Dropdown */}
                 {mobileOpen && (
-                    <div className="md:hidden mt-2 rounded-lg bg-white dark:bg-gray-900 shadow-lg border dark:border-gray-800">
-                        <ul className="flex flex-col p-2">
-                            {navItems.map(
-                                (item) =>
-                                    item.active && (
-                                        <li key={item.name}>
-                                            <button
-                                                onClick={() =>
-                                                    handleNavigate(item.slug)
-                                                }
-                                                className="w-full text-left px-4 py-2 rounded-md
-                        text-gray-700 dark:text-gray-200
-                        hover:bg-blue-100 dark:hover:bg-gray-700"
-                                            >
-                                                {item.name}
-                                            </button>
-                                        </li>
-                                    )
-                            )}
-                            {authStatus && (
-                                <li>
-                                    <LogoutBtn
-                                        className="w-full text-left px-4 py-2 rounded-md
-                        text-gray-700 dark:text-gray-200
-                        hover:bg-blue-100 dark:hover:bg-gray-700"
-                                    />
-                                </li>
-                            )}
-                        </ul>
+                    <div className="relative md:hidden">
+                        <div
+                        ref={dropdownRef}
+                            className="absolute right-0 mt-2 w-64
+                     rounded-lg
+                     bg-white/95 dark:bg-gray-950/95
+                     backdrop-blur-sm
+                     shadow-sm
+                     border border-gray-200/60 dark:border-gray-700/50
+                     z-50"
+                        >
+                            {/* Theme Toggle (Mobile) */}
+                            <div className="flex justify-end px-3 py-2">
+                                <button
+                                    onClick={() => dispatch(toggleDarkMode())}
+                                    className="w-9 h-9 rounded-full
+                         flex items-center justify-center
+                         bg-white/90 dark:bg-gray-800/70
+                         text-gray-800 dark:text-white 
+                         hover:scale-110 transition-all duration-200
+                         "
+                                >
+                                    {theme === "light" ? (
+                                        <FiMoon size={18} />
+                                    ) : (
+                                        <FiSun size={18} />
+                                    )}
+                                </button>
+                            </div>
+
+                            <ul className="flex flex-col p-2">
+                                {navItems.map(
+                                    (item) =>
+                                        item.active && (
+                                            <li key={item.name}>
+                                                <button
+                                                    onClick={() =>
+                                                        handleNavigate(
+                                                            item.slug
+                                                        )
+                                                    }
+                                                    className="w-full text-left px-4 py-2 rounded-md
+                                 text-gray-800 dark:text-white
+                                 hover:bg-gray-100/70 dark:hover:bg-gray-700/50
+                                 transition-colors"
+                                                >
+                                                    {item.name}
+                                                </button>
+                                            </li>
+                                        )
+                                )}
+
+                                {authStatus && (
+                                    <li>
+                                        <LogoutBtn
+                                            className="w-full text-left px-4 py-2 rounded-md
+                             text-gray-800 dark:text-gray-200
+                             hover:bg-gray-100/70 dark:hover:bg-gray-700/50
+                             transition-colors"
+                                        />
+                                    </li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 )}
             </Container>

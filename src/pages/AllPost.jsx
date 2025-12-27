@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, PostCard } from "../components";
 import appwriteService from "../service/config";
+import {Loader} from "../components";
 
 function AllPosts() {
   const [posts, setPosts] = useState([]);
@@ -20,7 +21,7 @@ function AllPosts() {
         {posts.length === 0 ? (
           <h1 className="text-2xl font-bold text-center
                          text-gray-700 dark:text-gray-300">
-            No Posts Available
+            <Loader/>
           </h1>
         ) : (
           <div
