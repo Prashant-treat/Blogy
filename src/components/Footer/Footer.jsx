@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaGithub,FaEnvelope , FaLinkedin } from 'react-icons/fa'
-import Logo from '../Logo'
+import image from "../../assets/image.png";
 
 function Footer() {
   return (
@@ -12,7 +12,11 @@ function Footer() {
 
           {/* Logo & Info */}
           <div className="lg:col-span-2">
-            <Logo width="110px" />
+            <img
+                    src={image}
+                    alt="Image"
+                    className="object-contain w-32"
+                  />
             <p className="mt-4 max-w-sm text-sm text-gray-600 dark:text-gray-400">
               Blogy is a platform built to write, share, and inspire ideas.
             </p>
