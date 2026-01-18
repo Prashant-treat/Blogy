@@ -1,5 +1,6 @@
            
 import logo from "../assets/logo.png"
+import {Link} from "react-router-dom"
 
 function HeroSection() {
   return (
@@ -48,19 +49,19 @@ function HeroSection() {
 
         {/* Buttons */}
         <div className="mt-10 flex justify-center gap-4 flex-wrap">
-          <a
-            href="/all-posts"
+           <Link
+            to={"/all-posts"}
             className="px-7 py-3.5 text-white bg-linear-to-r from-blue-600 to-blue-700 hover:to-blue-800 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-200"
           >
             Explore Blogs
-          </a>
+          </Link>
 
-          <a
-            href="/add-post"
+          <Link
+            to={"/add-post"}
             className="px-7 py-3.5 text-gray-900 border border-gray-300 hover:bg-gray-100 rounded-xl font-semibold transition-all duration-200 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
           >
             Start Writing
-          </a>
+          </Link>
         </div>
 
       </div>
